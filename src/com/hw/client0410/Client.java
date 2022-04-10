@@ -20,6 +20,7 @@ public class Client implements ActionListener {
     private JButton sendButton;
     private DefaultListModel<String> userModel;
     private JList<String> userList;
+    
 
     public void createClient(String ip, int port) {
         try {
