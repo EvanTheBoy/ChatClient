@@ -19,16 +19,25 @@ public class ReceiveThread implements Runnable {
         try {
             InputStream input = s.getInputStream();
             int head = input.read();
-            byte[] userBytes = new byte[30];
-            int len = input.read(userBytes);
-            String userMsg = new String(userBytes, 0, len);
-            userList.addElement(userMsg);
+            switch (head) {
+                case 1:
+                    byte[] bytes = new byte[1024];
+                    int length = input.read(bytes);
+                    String message = new String(bytes, 0, length);
+                    area.append(message.trim() + "\n");
+                    break;
+                case 3:
+                    byte[] userBytes = new byte[30];
+                    int len = input.read(userBytes);
+                    String userMsg = new String(userBytes, 0, len);
+                    userList.addElement(userMsg);
+                    break;
+                default:
+                    break;
+            }
 
             while (true) {
-                byte[] bytes = new byte[1024];
-                int length = input.read(bytes);
-                String message = new String(bytes, 0, length);
-                area.append(message.trim() + "\n");
+
             }
         } catch (IOException e) {
             e.printStackTrace();
