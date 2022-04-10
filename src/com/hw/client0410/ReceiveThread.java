@@ -18,6 +18,7 @@ public class ReceiveThread implements Runnable {
     public void run() {
         try {
             InputStream input = s.getInputStream();
+            int head = input.read();
             byte[] userBytes = new byte[30];
             int len = input.read(userBytes);
             String userMsg = new String(userBytes, 0, len);
