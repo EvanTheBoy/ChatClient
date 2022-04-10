@@ -33,7 +33,7 @@ public class ClientThread implements Runnable, MsgType{
                     String userMsg = new String(userBytes, 0, len);
                     System.out.println("用户上线消息收到，准备添加进列表...");
                     userList.addElement(userMsg);
-                    System.out.println("添加至列表完毕");
+                    System.out.println("添加至列表完毕  userList  = "+userList.size());
                     break;
                 default:
                     break;
