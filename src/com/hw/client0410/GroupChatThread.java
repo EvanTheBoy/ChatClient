@@ -21,6 +21,7 @@ public class GroupChatThread implements Runnable {
                 byte[] bytes = new byte[1024];
                 int length = input.read(bytes);
                 String message = new String(bytes, 0, length);
+                System.out.println("得到一条消息");
                 area.append(message.trim() + "\n");
             }
         } catch (IOException e) {
