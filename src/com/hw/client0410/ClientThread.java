@@ -22,7 +22,9 @@ public class ClientThread implements Runnable {
             int head = input.read(msgBytes);
             switch (head) {
                 case 1:
-
+                    GroupChatThread gct = new GroupChatThread(s, area);
+                    Thread t1 = new Thread(gct);
+                    t1.start();
                     break;
                 case 3:
                     byte[] userBytes = new byte[30];
