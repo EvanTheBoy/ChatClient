@@ -20,6 +20,7 @@ public class ClientThread implements Runnable {
             InputStream input = s.getInputStream();
             byte[] msgBytes = new byte[5];
             int head = input.read(msgBytes);
+            System.out.println("得到消息协议头，未确认该消息头具体内容!");
             switch (head) {
                 case 1:
                     GroupChatThread gct = new GroupChatThread(s, area);
@@ -27,10 +28,14 @@ public class ClientThread implements Runnable {
                     t1.start();
                     break;
                 case 3:
+                    System.out.println("已确认收到的消息协议为用户上线消息");
                     byte[] userBytes = new byte[30];
                     int len = input.read(userBytes);
                     String userMsg = new String(userBytes, 0, len);
+                    System.out.println("用户上线消息收到，准备添加进列表...");
                     userList.addElement(userMsg);
+                    System.out.println("添加至列表完毕");
+                    break;
                 default:
                     break;
             }
