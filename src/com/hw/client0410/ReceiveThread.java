@@ -27,17 +27,14 @@ public class ReceiveThread implements Runnable {
                     area.append(message.trim() + "\n");
                     break;
                 case 3:
-                    byte[] userBytes = new byte[30];
-                    int len = input.read(userBytes);
-                    String userMsg = new String(userBytes, 0, len);
-                    userList.addElement(userMsg);
-                    break;
+                    while (true) {
+                        byte[] userBytes = new byte[30];
+                        int len = input.read(userBytes);
+                        String userMsg = new String(userBytes, 0, len);
+                        userList.addElement(userMsg);
+                    }
                 default:
                     break;
-            }
-
-            while (true) {
-
             }
         } catch (IOException e) {
             e.printStackTrace();
