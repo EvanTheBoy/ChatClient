@@ -14,7 +14,7 @@ public class GroupChatThread implements Runnable {
     }
     @Override
     public void run() {
-        InputStream input = null;
+        InputStream input;
         try {
             input = s.getInputStream();
             while (true) {
