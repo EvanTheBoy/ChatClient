@@ -18,9 +18,8 @@ public class ClientThread implements Runnable, MsgType{
     public void run() {
         try {
             InputStream input = s.getInputStream();
-            byte[] msgBytes = new byte[5];
-            int head = input.read(msgBytes);
-            System.out.println("得到消息协议头，未确认该消息头具体内容!");
+            int head = input.read();
+            System.out.println("得到消息协议头，未确认该消息头具体内容! hea = "+head);
             switch (head) {
                 case GROUP:
                     GroupChatThread gct = new GroupChatThread(s, area);
