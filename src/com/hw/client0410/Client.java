@@ -30,7 +30,7 @@ public class Client implements ActionListener {
 //            DisplayUsers du = new DisplayUsers(socket, userModel);
 //            Thread t1 = new Thread(du);
 //            t1.start();
-            ReceiveThread rt = new ReceiveThread(socket, showArea, userModel);
+            ClientThread rt = new ClientThread(socket, showArea, userModel);
             Thread t2 = new Thread(rt);
             t2.start();
         } catch (IOException e) {
