@@ -27,9 +27,6 @@ public class Client implements ActionListener {
             initUI();
             //接受消息线程
             //Thread that receives information
-//            DisplayUsers du = new DisplayUsers(socket, userModel);
-//            Thread t1 = new Thread(du);
-//            t1.start();
             ClientThread rt = new ClientThread(socket, showArea, userModel);
             Thread t2 = new Thread(rt);
             t2.start();
