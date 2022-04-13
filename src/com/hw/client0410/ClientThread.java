@@ -5,27 +5,30 @@ import java.io.InputStream;
 import java.net.Socket;
 
 //这是专门为客户端写的接收其他客户端传来的消息的线程
-public class ClientThread implements Runnable, MsgType{
+public class ClientThread implements Runnable, MsgType {
     private Socket s;
     private JTextArea area;
-    private DefaultListModel<String> userList;
-    public ClientThread(Socket s, JTextArea area, DefaultListModel<String> userList) {
+    private DefaultListModel<String> userModel;
+    private JList<String> userList;
+    public ClientThread(Socket s, JTextArea area, DefaultListModel<String> userModel, JList<String> userList) {
         this.s = s;
         this.area = area;
+        this.userModel = userModel;
         this.userList = userList;
     }
 
     public void readUser(InputStream input) throws Exception {
-        int size = input.read();
-        if (!userList.isEmpty()) {
-            userList.removeAllElements();
+        if (!userModel.isEmpty()) {
+            userModel.removeAllElements();
         }
+        int size = input.read();
         for (int i = 0; i < size; ++i) {
             byte[] userBytes = new byte[1024];
             int len = input.read(userBytes);
             String userMsg = new String(userBytes, 0, len);
             System.out.println("用户上线消息收到，准备添加进列表...");
-            userList.addElement(userMsg);
+            userModel.addElement(userMsg);
+            userList.setModel(userModel);
         }
     }
 
@@ -43,13 +46,6 @@ public class ClientThread implements Runnable, MsgType{
                         break;
                     case USER:
                         readUser(input);
-//                        System.out.println("已确认收到的消息协议为用户上线消息");
-//                        byte[] userBytes = new byte[30];
-//                        int len = input.read(userBytes);
-//                        String userMsg = new String(userBytes, 0, len);
-//                        System.out.println("用户上线消息收到，准备添加进列表...");
-//                        userList.addElement(userMsg);
-//                        System.out.println("添加至列表完毕  userList  = " + userList.size());
                         break;
                     default:
                         break;

@@ -27,7 +27,7 @@ public class Client implements ActionListener {
             initUI();
             //接受消息线程
             //Thread that receives information
-            ClientThread rt = new ClientThread(socket, showArea, userModel);
+            ClientThread rt = new ClientThread(socket, showArea, userModel, userList);
             Thread t2 = new Thread(rt);
             t2.start();
         } catch (IOException e) {
