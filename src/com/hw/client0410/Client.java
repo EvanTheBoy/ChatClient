@@ -17,7 +17,6 @@ public class Client implements ActionListener {
     private JScrollPane userTxtScrollPane, userListPanel;
     private JPanel textPane, rightPanel;
     private JButton sendButton;
-    private DefaultListModel<String> userModel;
     private JList<String> userList;
 
     public void createClient(String ip, int port) {
@@ -26,7 +25,7 @@ public class Client implements ActionListener {
             initUI();
             //接受消息线程
             //Thread that receives information
-            ClientThread rt = new ClientThread(socket, showArea, userModel, userList);
+            ClientThread rt = new ClientThread(socket, showArea, userList);
             Thread t2 = new Thread(rt);
             t2.start();
         } catch (IOException e) {
@@ -59,7 +58,6 @@ public class Client implements ActionListener {
         textPane.add(text_field);
         textPane.add(sendButton);
 
-        //userModel = new DefaultListModel<>();
         userListPanel = new JScrollPane();
         userListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         userListPanel.setPreferredSize(new Dimension(250, 100));
@@ -85,20 +83,6 @@ public class Client implements ActionListener {
         jf.setVisible(true);
     }
 
-//    //获取服务器发送过来的用户信息,并显示在用户列表上
-//    //Obtain users' information sent from the server,and list them on the user's list
-//    private void displayUsers(Socket socket) {
-//        try {
-//            InputStream input = socket.getInputStream();
-//            byte[] bytes = new byte[30];
-//            int length = input.read(bytes);
-//            String word = new String(bytes, 0, length);
-//            userModel.addElement(word);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         String message = text_field.getText();
@@ -117,6 +101,5 @@ public class Client implements ActionListener {
 
     public static void main(String[] args) {
         new Client().createClient("127.0.0.1", 8888);
-//        new Client().initUI();
     }
 }

@@ -2,22 +2,21 @@ package com.hw.client0410;
 
 import javax.swing.*;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 //这是专门为客户端写的接收其他客户端传来的消息的线程
 public class ClientThread implements Runnable, MsgType {
     private Socket s;
     private JTextArea area;
-    private DefaultListModel<String> userModel;
     private JList<String> userList;
-    public ClientThread(Socket s, JTextArea area, DefaultListModel<String> userModel, JList<String> userList) {
+    public ClientThread(Socket s, JTextArea area, JList<String> userList) {
         this.s = s;
         this.area = area;
-        this.userModel = userModel;
         this.userList = userList;
     }
 
-    public void readUser(InputStream input) throws Exception {
+    public void readUser(InputStreamReader input) throws Exception {
         int size = input.read();
         System.out.println("user size = " + size);
         String[] userArr = new String[size];
@@ -29,7 +28,7 @@ public class ClientThread implements Runnable, MsgType {
         userList.setListData(userArr);
     }
 
-    public String readString(InputStream is) throws Exception{
+    public String readString(InputStreamReader is) throws Exception{
         StringBuffer stringBuffer = new StringBuffer();
         int i = 0;
         while ((i=is.read()) != '#') {
@@ -42,7 +41,8 @@ public class ClientThread implements Runnable, MsgType {
     public void run() {
         while (true) {
             try {
-                InputStream input = s.getInputStream();
+                //InputStream input = s.getInputStream();
+                InputStreamReader input = new InputStreamReader(s.getInputStream());
                 int head = input.read();
                 System.out.println("得到消息协议头，未确认该消息头具体内容! head = " + head);
                 switch (head) {
