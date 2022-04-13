@@ -1,7 +1,6 @@
 package com.hw.client0410;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 
@@ -18,6 +17,9 @@ public class ClientThread implements Runnable, MsgType{
 
     public void readUser(InputStream input) throws Exception {
         int size = input.read();
+        if (!userList.isEmpty()) {
+
+        }
         for (int i = 0; i < size; ++i) {
             byte[] userBytes = new byte[1024];
             int len = input.read(userBytes);
