@@ -10,7 +10,6 @@ public class ClientThread implements Runnable, MsgType {
     private JTextArea area;
     private DefaultListModel<String> userModel;
     private JList<String> userList;
-    private String[] userArr = new String[1024];
     public ClientThread(Socket s, JTextArea area, DefaultListModel<String> userModel, JList<String> userList) {
         this.s = s;
         this.area = area;
@@ -20,14 +19,26 @@ public class ClientThread implements Runnable, MsgType {
 
     public void readUser(InputStream input) throws Exception {
         int size = input.read();
+        System.out.println("user size = " + size);
+        String[] userArr = new String[size];
         for (int i = 0; i < size; ++i) {
-            byte[] userBytes = new byte[1024];
-            int len = input.read(userBytes);
-            String userMsg = new String(userBytes, 0, len);
-            System.out.println("用户上线消息收到，准备添加进列表...");
+//            byte[] userBytes = new byte[1024];
+//            int len = input.read(userBytes);
+//            String userMsg = new String(userBytes, 0, len);
+            String userMsg = readString(input);
+            System.out.println("用户上线消息收到，准备添加进列表..."+userMsg);
             userArr[i] = userMsg;
-            userList.setListData(userArr);
         }
+        userList.setListData(userArr);
+    }
+    public String readString(InputStream is)throws Exception{
+        StringBuffer stringBuffer = new StringBuffer();
+        int i = 0;
+        while((i=is.read()) != '#'){
+            char c = (char)i;
+            stringBuffer.append(c);
+        }
+        return new String(stringBuffer);
     }
 
     public void run() {

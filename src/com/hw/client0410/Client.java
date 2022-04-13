@@ -59,11 +59,15 @@ public class Client implements ActionListener {
         textPane.add(text_field);
         textPane.add(sendButton);
 
+
+//        String[] user = {"夏","好","夏","好","夏","好"};
+
         //userModel = new DefaultListModel<>();
         userListPanel = new JScrollPane();
         userListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         userListPanel.setPreferredSize(new Dimension(250, 100));
         userList = new JList<>();
+//        userList.setListData(user);
         userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         userList.setFont(new Font("楷体", Font.BOLD, 15));
         userListPanel.setViewportView(userList);
@@ -117,5 +121,6 @@ public class Client implements ActionListener {
 
     public static void main(String[] args) {
         new Client().createClient("127.0.0.1", 8888);
+//        new Client().initUI();
     }
 }
