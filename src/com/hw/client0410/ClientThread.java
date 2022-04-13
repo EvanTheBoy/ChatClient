@@ -15,7 +15,8 @@ public class ClientThread implements Runnable, MsgType{
         this.area = area;
         this.userList = userList;
     }
-    public void readUser(InputStream input) throws Exception{
+
+    public void readUser(InputStream input) throws Exception {
         int size = input.read();
         for (int i = 0; i < size; ++i) {
             byte[] userBytes = new byte[1024];
@@ -25,6 +26,7 @@ public class ClientThread implements Runnable, MsgType{
             userList.addElement(userMsg);
         }
     }
+
     public void run() {
         while (true) {
             try {
