@@ -18,7 +18,7 @@ public class ClientThread implements Runnable, MsgType{
     public void readUser(InputStream input) throws Exception {
         int size = input.read();
         if (!userList.isEmpty()) {
-
+            userList.removeAllElements();
         }
         for (int i = 0; i < size; ++i) {
             byte[] userBytes = new byte[1024];
