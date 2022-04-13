@@ -19,9 +19,6 @@ public class ClientThread implements Runnable, MsgType {
     }
 
     public void readUser(InputStream input) throws Exception {
-        if (!userModel.isEmpty()) {
-            userModel.removeAllElements();
-        }
         int size = input.read();
         for (int i = 0; i < size; ++i) {
             byte[] userBytes = new byte[1024];
@@ -29,8 +26,8 @@ public class ClientThread implements Runnable, MsgType {
             String userMsg = new String(userBytes, 0, len);
             System.out.println("用户上线消息收到，准备添加进列表...");
             userArr[i] = userMsg;
+            userList.setListData(userArr);
         }
-        userList.setListData(userArr);
     }
 
     public void run() {

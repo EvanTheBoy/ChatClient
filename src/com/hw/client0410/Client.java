@@ -60,12 +60,18 @@ public class Client implements ActionListener {
         textPane.add(text_field);
         textPane.add(sendButton);
 
-        userModel = new DefaultListModel<>();
-        userList = new JList<>(userModel);
-        userListPanel = new JScrollPane(userList);
+        //userModel = new DefaultListModel<>();
+        userListPanel = new JScrollPane();
+        userListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        userListPanel.setPreferredSize(new Dimension(250, 100));
+        userList = new JList<>();
+        userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        userList.setFont(new Font("楷体", Font.BOLD, 15));
+        userListPanel.setViewportView(userList);
+
         rightPanel = new JPanel();
-        rightPanel.setBorder(new LineBorder(null));
-        rightPanel.setPreferredSize(new Dimension(280, 0));
+//        rightPanel.setBorder(new LineBorder(null));
+//        rightPanel.setPreferredSize(new Dimension(280, 0));
         rightPanel.add(userListPanel);
 
 //        leftPanel = new JPanel();
