@@ -22,19 +22,17 @@ public class ClientThread implements Runnable, MsgType {
         System.out.println("user size = " + size);
         String[] userArr = new String[size];
         for (int i = 0; i < size; ++i) {
-//            byte[] userBytes = new byte[1024];
-//            int len = input.read(userBytes);
-//            String userMsg = new String(userBytes, 0, len);
             String userMsg = readString(input);
-            System.out.println("用户上线消息收到，准备添加进列表..."+userMsg);
+            System.out.println("用户上线消息收到，准备添加进列表..." + userMsg);
             userArr[i] = userMsg;
         }
         userList.setListData(userArr);
     }
-    public String readString(InputStream is)throws Exception{
+
+    public String readString(InputStream is) throws Exception{
         StringBuffer stringBuffer = new StringBuffer();
         int i = 0;
-        while((i=is.read()) != '#'){
+        while ((i=is.read()) != '#') {
             char c = (char)i;
             stringBuffer.append(c);
         }
