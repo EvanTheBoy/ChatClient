@@ -1,7 +1,6 @@
 package com.hw.client0410;
 
 import javax.swing.*;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
@@ -41,7 +40,6 @@ public class ClientThread implements Runnable, MsgType {
     public void run() {
         while (true) {
             try {
-                //InputStream input = s.getInputStream();
                 InputStreamReader input = new InputStreamReader(s.getInputStream());
                 int head = input.read();
                 System.out.println("得到消息协议头，未确认该消息头具体内容! head = " + head);

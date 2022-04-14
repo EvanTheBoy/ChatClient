@@ -91,7 +91,9 @@ public class Client implements ActionListener {
                 output = socket.getOutputStream();
                 output.write(message.getBytes());
                 output.flush();
-                showArea.append("我:" + message + "\n");
+                String sendMsg = "我:" + message + "\n";
+                System.out.println("客户端发来一条消息:" + sendMsg);
+                showArea.append(sendMsg);
                 text_field.setText(null);
             } catch (IOException ex) {
                 ex.printStackTrace();
