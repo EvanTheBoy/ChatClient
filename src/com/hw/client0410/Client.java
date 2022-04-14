@@ -92,7 +92,7 @@ public class Client implements ActionListener {
                 output.write(message.getBytes());
                 output.flush();
                 String sendMsg = "我:" + message + "\n";
-                System.out.println("客户端发来一条消息:" + sendMsg);
+                System.out.println("我将把这个消息发送出去:" + sendMsg);
                 showArea.append(sendMsg);
                 text_field.setText(null);
             } catch (IOException ex) {
