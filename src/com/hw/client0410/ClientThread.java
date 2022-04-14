@@ -27,11 +27,11 @@ public class ClientThread implements Runnable, MsgType {
         userList.setListData(userArr);
     }
 
-    public String readString(InputStreamReader is) throws Exception{
+    public String readString(InputStreamReader is) throws Exception {
         StringBuffer stringBuffer = new StringBuffer();
         int i = 0;
-        while ((i=is.read()) != '#') {
-            char c = (char)i;
+        while ((i = is.read()) != '#') {
+            char c = (char) i;
             stringBuffer.append(c);
         }
         return new String(stringBuffer);

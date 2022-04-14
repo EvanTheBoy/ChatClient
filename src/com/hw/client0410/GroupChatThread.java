@@ -19,6 +19,7 @@ public class GroupChatThread implements Runnable {
 //        while ((i = input.read()) != '#') {
 //            char c = (char) i;
 //            message.append(c);
+//            System.out.println("现在的消息是:" + message);
 //        }
 //        return new String(message);
 //    }
@@ -29,6 +30,7 @@ public class GroupChatThread implements Runnable {
         try {
             input = s.getInputStream();
             while (true) {
+                System.out.println("消息就要来了");
                 byte[] bytes = new byte[1024];
                 int length = input.read(bytes);
                 String message = new String(bytes, 0, length);
