@@ -12,6 +12,17 @@ public class GroupChatThread implements Runnable {
         this.s = s;
         this.area = area;
     }
+
+//    private String getMsg(InputStream input) throws Exception {
+//        StringBuffer message = new StringBuffer();
+//        int i = 0;
+//        while ((i = input.read()) != '#') {
+//            char c = (char) i;
+//            message.append(c);
+//        }
+//        return new String(message);
+//    }
+
     @Override
     public void run() {
         InputStream input;
@@ -21,10 +32,11 @@ public class GroupChatThread implements Runnable {
                 byte[] bytes = new byte[1024];
                 int length = input.read(bytes);
                 String message = new String(bytes, 0, length);
+//                String message = getMsg(input);
                 System.out.println("得到一条消息:" + message);
                 area.append(message.trim() + "\n");
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
