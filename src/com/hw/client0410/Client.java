@@ -89,8 +89,6 @@ public class Client implements ActionListener {
         if (message.length() > 0) {
             try {
                 output = socket.getOutputStream();
-//                String finalMsg = message + "#";
-//                output.write(finalMsg.getBytes());
                 output.write(message.getBytes());
                 output.flush();
                 String sendMsg = "我:" + message + "\n";
