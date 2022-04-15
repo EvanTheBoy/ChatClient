@@ -40,20 +40,13 @@ public class ClientThread implements Runnable, MsgType {
     private String getMessage(InputStreamReader input) throws Exception {
         StringBuffer message = new StringBuffer();
         int i = 0;
-        while ((i = input.read()) != '#') {
+        while ((i = input.read()) != 13) {
             char c = (char) i;
             message.append(c);
             System.out.println("现在的消息是:" + message);
         }
         return new String(message);
     }
-
-//    private String getMessage(InputStream input) throws Exception {
-//        byte[] bytes = new byte[1024];
-//        int length = input.read(bytes);
-//        String message = new String(bytes, 0, length);
-//        return message;
-//    }
 
     public void run() {
         while (true) {
@@ -64,9 +57,6 @@ public class ClientThread implements Runnable, MsgType {
                 System.out.println("准备进入switch...");
                 switch (head) {
                     case GROUP:
-//                        GroupChatThread gct = new GroupChatThread(s, area);
-//                        Thread t1 = new Thread(gct);
-//                        t1.start();
                         String message = getMessage(input);
                         area.append(message.trim() + "\n");
                         break;
