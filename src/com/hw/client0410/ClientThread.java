@@ -1,7 +1,6 @@
 package com.hw.client0410;
 
 import javax.swing.*;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
@@ -49,12 +48,12 @@ public class ClientThread implements Runnable, MsgType {
         return new String(message);
     }
 
-    private String getMessageTwo(InputStreamReader input) throws Exception {
-        byte[] bytes = new byte[1024];
-        int len = input.read();
-        String message = new String(bytes, 0, len);
-        return message;
-    }
+//    private String getMessage(InputStream input) throws Exception {
+//        byte[] bytes = new byte[1024];
+//        int length = input.read(bytes);
+//        String message = new String(bytes, 0, length);
+//        return message;
+//    }
 
     public void run() {
         while (true) {
@@ -68,7 +67,7 @@ public class ClientThread implements Runnable, MsgType {
 //                        GroupChatThread gct = new GroupChatThread(s, area);
 //                        Thread t1 = new Thread(gct);
 //                        t1.start();
-                        String message = getMessageTwo(input);
+                        String message = getMessage(input);
                         area.append(message.trim() + "\n");
                         break;
                     case USER:
