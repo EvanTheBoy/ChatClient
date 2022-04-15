@@ -103,10 +103,20 @@ public class Client implements ActionListener, ListSelectionListener {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (!userList.getValueIsAdjusting()) {
-            String identity = userList.getSelectedValue();
-            activatePrivateUI(identity);
-
+        try {
+            if (!userList.getValueIsAdjusting()) {
+                String identity = userList.getSelectedValue();
+                activatePrivateUI(identity);
+                String message = pTxtField.getText();
+                output = socket.getOutputStream();
+                System.out.println("现在我将发送私聊消息" + message);
+                output.write(message.getBytes());
+                String sendPrivateMsg = message + "\n";
+                pShowArea.append(sendPrivateMsg);
+                pTxtField.setText(null);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

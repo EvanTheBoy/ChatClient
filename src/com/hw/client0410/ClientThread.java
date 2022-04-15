@@ -49,6 +49,10 @@ public class ClientThread implements Runnable, MsgType {
     }
 
 
+    private String getPrivateMessage(InputStreamReader input) throws Exception {
+
+        return "";
+    }
 
     public void run() {
         while (true) {
