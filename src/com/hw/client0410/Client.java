@@ -14,11 +14,11 @@ public class Client implements ActionListener, ListSelectionListener {
     private Socket socket;
     private OutputStream output;
     private JFrame jf;
-    private JTextArea showArea;
+    private JTextArea showArea, pShowArea;
     private JTextField text_field, pTxtField;
     private JScrollPane userTxtScrollPane, userListPanel, privateUserPane;
-    private JPanel textPane, rightPanel;
-    private JButton sendButton;
+    private JPanel textPane, rightPanel, pFieldPane;
+    private JButton sendButton, pSendButton;
     private JList<String> userList;
 
     public void createClient(String ip, int port) {
@@ -82,7 +82,7 @@ public class Client implements ActionListener, ListSelectionListener {
         privateUI.setLocationRelativeTo(null);
 
         //消息显示区域
-        JTextArea pShowArea = new JTextArea();
+        pShowArea = new JTextArea();
         pShowArea.setEditable(false);
         pShowArea.setLineWrap(true);
         privateUserPane = new JScrollPane(pShowArea);
@@ -91,9 +91,9 @@ public class Client implements ActionListener, ListSelectionListener {
         pTxtField = new JTextField();
         pTxtField.setColumns(30);
         pTxtField.addActionListener(this);
-        JButton pSendButton = new JButton("send");
+        pSendButton = new JButton("send");
         pSendButton.addActionListener(this);
-        JPanel pFieldPane = new JPanel(new FlowLayout());
+        pFieldPane = new JPanel(new FlowLayout());
         pFieldPane.add(pTxtField);
         pFieldPane.add(pSendButton);
 
