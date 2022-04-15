@@ -1,6 +1,8 @@
 package com.hw.client0410;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class Client implements ActionListener {
+public class Client implements ActionListener, ListSelectionListener {
     private Socket socket;
     private OutputStream output;
     private JFrame jf;
@@ -64,6 +66,7 @@ public class Client implements ActionListener {
         userList = new JList<>();
         userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         userList.setFont(new Font("楷体", Font.BOLD, 15));
+        userList.addListSelectionListener(this);
         userListPanel.setViewportView(userList);
 
         rightPanel = new JPanel();
@@ -81,6 +84,11 @@ public class Client implements ActionListener {
         jf.add(rightPanel, BorderLayout.EAST);
 //        jf.add(leftPanel, BorderLayout.WEST);
         jf.setVisible(true);
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        
     }
 
     @Override
