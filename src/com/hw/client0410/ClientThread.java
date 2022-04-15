@@ -1,6 +1,7 @@
 package com.hw.client0410;
 
 import javax.swing.*;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
@@ -15,7 +16,7 @@ public class ClientThread implements Runnable, MsgType {
         this.userList = userList;
     }
 
-    public void readUser(InputStreamReader input) throws Exception {
+    private void readUser(InputStreamReader input) throws Exception {
         int size = input.read();
         System.out.println("user size = " + size);
         String[] userArr = new String[size];
@@ -27,7 +28,7 @@ public class ClientThread implements Runnable, MsgType {
         userList.setListData(userArr);
     }
 
-    public String readString(InputStreamReader is) throws Exception {
+    private String readString(InputStreamReader is) throws Exception {
         StringBuffer stringBuffer = new StringBuffer();
         int i = 0;
         while ((i = is.read()) != '#') {
@@ -37,19 +38,38 @@ public class ClientThread implements Runnable, MsgType {
         return new String(stringBuffer);
     }
 
+    private String getMessage(InputStreamReader input) throws Exception {
+        StringBuffer message = new StringBuffer();
+        int i = 0;
+        while ((i = input.read()) != '#') {
+            char c = (char) i;
+            message.append(c);
+            System.out.println("现在的消息是:" + message);
+        }
+        return new String(message);
+    }
+
+    private String getMessageTwo(InputStreamReader input) throws Exception {
+        byte[] bytes = new byte[1024];
+        int len = input.read();
+        String message = new String(bytes, 0, len);
+        return message;
+    }
+
     public void run() {
         while (true) {
             try {
                 InputStreamReader input = new InputStreamReader(s.getInputStream());
                 int head = input.read();
-//                char head = (char) beforeHead;
                 System.out.println("得到消息协议头，未确认该消息头具体内容! head = " + head);
                 System.out.println("准备进入switch...");
                 switch (head) {
                     case GROUP:
-                        GroupChatThread gct = new GroupChatThread(s, area);
-                        Thread t1 = new Thread(gct);
-                        t1.start();
+//                        GroupChatThread gct = new GroupChatThread(s, area);
+//                        Thread t1 = new Thread(gct);
+//                        t1.start();
+                        String message = getMessageTwo(input);
+                        area.append(message.trim() + "\n");
                         break;
                     case USER:
                         readUser(input);
