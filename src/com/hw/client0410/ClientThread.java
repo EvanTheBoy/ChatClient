@@ -48,6 +48,8 @@ public class ClientThread implements Runnable, MsgType {
         return new String(message);
     }
 
+
+
     public void run() {
         while (true) {
             try {
@@ -62,6 +64,8 @@ public class ClientThread implements Runnable, MsgType {
                         break;
                     case USER:
                         readUser(input);
+                        break;
+                    case PRIVATE:
                         break;
                     default:
                         break;
