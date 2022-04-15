@@ -26,7 +26,6 @@ public class Client implements ActionListener, ListSelectionListener {
             socket = new Socket(ip, port);
             initUI();
             //接受消息线程
-            //Thread that receives information
             ClientThread rt = new ClientThread(socket, showArea, userList);
             Thread t2 = new Thread(rt);
             t2.start();
@@ -41,25 +40,24 @@ public class Client implements ActionListener, ListSelectionListener {
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setLocationRelativeTo(null);
 
+        //消息显示部分
         showArea = new JTextArea();
         showArea.setEditable(false);
         showArea.setLineWrap(true);
-        //显示文字部分的pane  pane which is used to display texts
         userTxtScrollPane = new JScrollPane(showArea);
 
+        //消息发送框和按钮
         text_field = new JTextField();
         text_field.setColumns(30);
-        //text_field.setPreferredSize(new Dimension(410, 35));
         text_field.addActionListener(this);
         sendButton = new JButton("send");
-        //sendButton.setPreferredSize(new Dimension(80, 35));
         sendButton.addActionListener(this);
-        //底部文本框和按钮pane  text field and pane of button on the bottom
         textPane = new JPanel();
         textPane.setLayout(new FlowLayout());
         textPane.add(text_field);
         textPane.add(sendButton);
 
+        //用户列表
         userListPanel = new JScrollPane();
         userListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         userListPanel.setPreferredSize(new Dimension(250, 100));
@@ -68,27 +66,30 @@ public class Client implements ActionListener, ListSelectionListener {
         userList.setFont(new Font("楷体", Font.BOLD, 15));
         userList.addListSelectionListener(this);
         userListPanel.setViewportView(userList);
-
         rightPanel = new JPanel();
-//        rightPanel.setBorder(new LineBorder(null));
-//        rightPanel.setPreferredSize(new Dimension(280, 0));
         rightPanel.add(userListPanel);
 
-//        leftPanel = new JPanel();
-//        leftPanel.setBorder(new LineBorder(null));
-//        leftPanel.setPreferredSize(new Dimension(620, 600));
-//        leftPanel.add(userTxtScrollPane, BorderLayout.CENTER);
-//        leftPanel.add(textPane, BorderLayout.SOUTH);
         jf.add(userTxtScrollPane, BorderLayout.CENTER);
         jf.add(textPane, BorderLayout.SOUTH);
         jf.add(rightPanel, BorderLayout.EAST);
-//        jf.add(leftPanel, BorderLayout.WEST);
         jf.setVisible(true);
+    }
+
+    private void activatePrivateUI(String username) {
+        JFrame privateUI = new JFrame("与" + username + "的聊天");
+        privateUI.setSize(800, 500);
+        privateUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        privateUI.setLocationRelativeTo(null);
+        privateUI.setVisible(true);
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        
+        if (!userList.getValueIsAdjusting()) {
+            String identity = userList.getSelectedValue();
+            activatePrivateUI(identity);
+
+        }
     }
 
     @Override
