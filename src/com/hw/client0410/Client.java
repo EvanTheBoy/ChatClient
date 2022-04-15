@@ -60,18 +60,16 @@ public class Client implements ActionListener, ListSelectionListener {
         //用户列表
         userListPanel = new JScrollPane();
         userListPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        userListPanel.setPreferredSize(new Dimension(250, 100));
+        userListPanel.setPreferredSize(new Dimension(220, 100));
         userList = new JList<>();
         userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        userList.setFont(new Font("楷体", Font.BOLD, 15));
+        userList.setFont(new Font("楷体", Font.BOLD, 32));
         userList.addListSelectionListener(this);
         userListPanel.setViewportView(userList);
-        rightPanel = new JPanel();
-        rightPanel.add(userListPanel);
 
         jf.add(userTxtScrollPane, BorderLayout.CENTER);
         jf.add(textPane, BorderLayout.SOUTH);
-        jf.add(rightPanel, BorderLayout.EAST);
+        jf.add(userListPanel, BorderLayout.EAST);
         jf.setVisible(true);
     }
 
