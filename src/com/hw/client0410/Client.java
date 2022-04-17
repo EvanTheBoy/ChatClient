@@ -21,6 +21,7 @@ public class Client implements ActionListener, ListSelectionListener {
     private JButton sendButton, pSendButton;
     private JList<String> userList;
 
+    
     public void createClient(String ip, int port) {
         try {
             socket = new Socket(ip, port);
