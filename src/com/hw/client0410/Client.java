@@ -17,10 +17,10 @@ public class Client implements ActionListener, ListSelectionListener {
     private JTextArea showArea, pShowArea;
     private JTextField text_field, pTxtField;
     private JScrollPane userTxtScrollPane, userListPanel, privateUserPane;
-    private JPanel textPane, rightPanel, pFieldPane;
+    private JPanel textPane, pFieldPane;
     private JButton sendButton, pSendButton;
     private JList<String> userList;
-    
+
     public void createClient(String ip, int port) {
         try {
             socket = new Socket(ip, port);
