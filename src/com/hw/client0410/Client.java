@@ -20,6 +20,7 @@ public class Client implements ActionListener, ListSelectionListener {
     private JPanel textPane, rightPanel, pFieldPane;
     private JButton sendButton, pSendButton;
     private JList<String> userList;
+
     
     public void createClient(String ip, int port) {
         try {
