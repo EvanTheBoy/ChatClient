@@ -34,6 +34,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         }
     }
 
+    //创建群聊窗口
     private void initUI() {
         jf = new JFrame("聊天室");
         jf.setSize(900, 600);
@@ -73,6 +74,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         jf.setVisible(true);
     }
 
+    //创建私聊窗口
     private void activatePrivateUI(String username) {
         JFrame privateUI = new JFrame("与" + username + "的聊天");
         privateUI.setSize(800, 500);
