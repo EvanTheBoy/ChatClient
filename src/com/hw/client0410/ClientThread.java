@@ -1,7 +1,9 @@
 package com.hw.client0410;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
 
 //这是专门为客户端写的接收其他客户端传来的消息的线程
@@ -9,10 +11,17 @@ public class ClientThread implements Runnable, MsgType {
     private Socket s;
     private JTextArea area;
     private JList<String> userList;
+    private OutputStream output;
     public ClientThread(Socket s, JTextArea area, JList<String> userList) {
         this.s = s;
         this.area = area;
         this.userList = userList;
+        try {
+            this.output = s.getOutputStream();
+            output.write(USER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void readUser(InputStreamReader input) throws Exception {

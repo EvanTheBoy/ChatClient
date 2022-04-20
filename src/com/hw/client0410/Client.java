@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class Client implements ActionListener, ListSelectionListener {
+public class Client implements ActionListener, ListSelectionListener, MsgType {
     private Socket socket;
     private OutputStream output;
     private JFrame jf;
@@ -126,6 +126,7 @@ public class Client implements ActionListener, ListSelectionListener {
         if (message.length() > 0) {
             try {
                 output = socket.getOutputStream();
+                output.write(GROUP);
                 output.write(message.getBytes());
                 output.flush();
                 String sendMsg = "我:" + message + "\n";
