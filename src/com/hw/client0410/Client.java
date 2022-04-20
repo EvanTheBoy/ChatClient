@@ -26,7 +26,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
             socket = new Socket(ip, port);
             initUI();
             //接受消息线程
-            ClientThread rt = new ClientThread(socket, showArea, userList);
+            ClientThread rt = new ClientThread(socket, showArea, pShowArea, userList);
             Thread t2 = new Thread(rt);
             t2.start();
         } catch (IOException e) {
@@ -110,6 +110,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
                 String message = pTxtField.getText();
                 output = socket.getOutputStream();
                 System.out.println("现在我将发送私聊消息" + message);
+                output.write(PRIVATE);
                 output.write(message.getBytes());
                 String sendPrivateMsg = message + "\n";
                 pShowArea.append(sendPrivateMsg);

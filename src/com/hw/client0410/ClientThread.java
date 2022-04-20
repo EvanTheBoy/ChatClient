@@ -9,12 +9,13 @@ import java.net.Socket;
 //这是专门为客户端写的接收其他客户端传来的消息的线程
 public class ClientThread implements Runnable, MsgType {
     private Socket s;
-    private JTextArea area;
+    private JTextArea area1, area2;
     private JList<String> userList;
     private OutputStream output;
-    public ClientThread(Socket s, JTextArea area, JList<String> userList) {
+    public ClientThread(Socket s, JTextArea area1, JTextArea area2, JList<String> userList) {
         this.s = s;
-        this.area = area;
+        this.area1 = area1;
+        this.area2 = area2;
         this.userList = userList;
         try {
             this.output = s.getOutputStream();
@@ -57,12 +58,6 @@ public class ClientThread implements Runnable, MsgType {
         return new String(message);
     }
 
-
-    private String getPrivateMessage(InputStreamReader input) throws Exception {
-
-        return "";
-    }
-
     public void run() {
         while (true) {
             try {
@@ -73,12 +68,14 @@ public class ClientThread implements Runnable, MsgType {
                 switch (head) {
                     case GROUP:
                         String message = getMessage(input);
-                        area.append(message.trim() + "\n");
+                        area1.append(message.trim() + "\n");
                         break;
                     case USER:
                         readUser(input);
                         break;
                     case PRIVATE:
+                        String privateMessage = getMessage(input);
+                        area2.append(privateMessage.trim() + "\n");
                         break;
                     default:
                         break;
