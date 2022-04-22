@@ -112,10 +112,11 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
                 String message = pTxtField.getText();
                 output = socket.getOutputStream();
                 System.out.println("现在我将发送私聊消息" + message);
-                output.write(PRIVATE);
-                output.write(message.getBytes());
+                output.write(PRIVATE); //发送私聊消息头给服务器
+                output.write((identity.charAt(identity.length() - 1) + '#')); //发送私聊对象id给服务器
+                output.write(message.getBytes());//发送私聊内容
                 String sendPrivateMsg = message + "\n";
-                pShowArea.append(sendPrivateMsg);
+                pShowArea.append(sendPrivateMsg); //在己方私聊面板上显示内容
                 pTxtField.setText(null);
             }
         } catch (Exception ex) {
