@@ -1,7 +1,6 @@
 package com.hw.client0410;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -13,6 +12,7 @@ public class ClientThread implements Runnable, MsgType {
     private JTextArea area1, area2;
     private JList<String> userList;
     private OutputStream output;
+    private JFrame jFrame;
     public ClientThread(Socket s, JTextArea area1, JTextArea area2, JList<String> userList) {
         this.s = s;
         this.area1 = area1;
@@ -60,7 +60,8 @@ public class ClientThread implements Runnable, MsgType {
     }
 
     private void activatePrivateRoom() {
-        
+        jFrame = new JFrame();
+
     }
 
     public void run() {
@@ -80,7 +81,7 @@ public class ClientThread implements Runnable, MsgType {
                         break;
                     case PRIVATE:
                         String privateMessage = getMessage(input);
-
+                        activatePrivateRoom();
                         area2.append(privateMessage.trim() + "\n");
                         break;
                     default:
