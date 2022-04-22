@@ -7,7 +7,7 @@ public class Login {
         JFrame jf = new JFrame("登录");
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setSize(400, 400);
-        
+
         jf.setVisible(true);
     }
 

@@ -13,10 +13,9 @@ public class ClientThread implements Runnable, MsgType {
     private JList<String> userList;
     private OutputStream output;
     private JFrame jFrame;
-    public ClientThread(Socket s, JTextArea area1, JTextArea area2, JList<String> userList) {
+    public ClientThread(Socket s, JTextArea area1, JList<String> userList) {
         this.s = s;
         this.area1 = area1;
-        this.area2 = area2;
         this.userList = userList;
         try {
             this.output = s.getOutputStream();
@@ -60,8 +59,10 @@ public class ClientThread implements Runnable, MsgType {
     }
 
     private void activatePrivateRoom() {
-        jFrame = new JFrame();
-
+        jFrame = new JFrame("私聊窗口");
+        jFrame.setSize(800, 500);
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jFrame.setVisible(true);
     }
 
     public void run() {

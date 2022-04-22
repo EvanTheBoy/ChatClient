@@ -26,7 +26,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
             socket = new Socket(ip, port);
             initUI();
             //接受消息线程
-            ClientThread rt = new ClientThread(socket, showArea, pShowArea, userList);
+            ClientThread rt = new ClientThread(socket, showArea, userList);
             Thread t2 = new Thread(rt);
             t2.start();
         } catch (IOException e) {
@@ -68,6 +68,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         userList.addListSelectionListener(this);
         userListPanel.setViewportView(userList);
 
+        //完善最终的界面
         jf.add(userTxtScrollPane, BorderLayout.CENTER);
         jf.add(textPane, BorderLayout.SOUTH);
         jf.add(userListPanel, BorderLayout.EAST);
@@ -108,7 +109,9 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         try {
             if (!userList.getValueIsAdjusting()) {
                 String identity = userList.getSelectedValue();
+                //选中用户后，立刻创建对应的私聊窗口
                 activatePrivateUI(identity);
+                //从文本框获取输入内容
                 String message = pTxtField.getText();
                 output = socket.getOutputStream();
                 System.out.println("现在我将发送私聊消息" + message);
