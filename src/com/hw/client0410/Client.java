@@ -75,55 +75,57 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         jf.setVisible(true);
     }
 
-    //创建私聊窗口
-    private void activatePrivateUI(String username) {
-        JFrame privateUI = new JFrame("与" + username + "的聊天");
-        privateUI.setSize(800, 500);
-        privateUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        privateUI.setLocationRelativeTo(null);
-
-        //消息显示区域
-        pShowArea = new JTextArea();
-        pShowArea.setEditable(false);
-        pShowArea.setLineWrap(true);
-        privateUserPane = new JScrollPane(pShowArea);
-
-        //文本框和按钮
-        pTxtField = new JTextField();
-        pTxtField.setColumns(30);
-        pTxtField.addActionListener(this);
-        pSendButton = new JButton("send");
-        pSendButton.addActionListener(this);
-        pFieldPane = new JPanel(new FlowLayout());
-        pFieldPane.add(pTxtField);
-        pFieldPane.add(pSendButton);
-
-        //最后的界面添加
-        privateUI.add(privateUserPane, BorderLayout.CENTER);
-        privateUI.add(pFieldPane, BorderLayout.SOUTH);
-        privateUI.setVisible(true);
-    }
+//    //创建私聊窗口
+//    private void activatePrivateUI(String username) {
+//        JFrame privateUI = new JFrame("与" + username + "的聊天");
+//        privateUI.setSize(800, 500);
+//        privateUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        privateUI.setLocationRelativeTo(null);
+//
+//        //消息显示区域
+//        pShowArea = new JTextArea();
+//        pShowArea.setEditable(false);
+//        pShowArea.setLineWrap(true);
+//        privateUserPane = new JScrollPane(pShowArea);
+//
+//        //文本框和按钮
+//        pTxtField = new JTextField();
+//        pTxtField.setColumns(30);
+//        pTxtField.addActionListener(this);
+//        pSendButton = new JButton("send");
+//        pSendButton.addActionListener(this);
+//        pFieldPane = new JPanel(new FlowLayout());
+//        pFieldPane.add(pTxtField);
+//        pFieldPane.add(pSendButton);
+//
+//        //最后的界面添加
+//        privateUI.add(privateUserPane, BorderLayout.CENTER);
+//        privateUI.add(pFieldPane, BorderLayout.SOUTH);
+//        privateUI.setVisible(true);
+//    }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
         try {
             if (!userList.getValueIsAdjusting()) {
                 String identity = userList.getSelectedValue();
-                //选中用户后，立刻创建对应的私聊窗口
-                activatePrivateUI(identity);
+//                //选中用户后，立刻创建对应的私聊窗口
+//                activatePrivateUI(identity);
                 //从文本框获取输入内容
-                String message = pTxtField.getText();
+                //String message = pTxtField.getText();
+                String message = text_field.getText();
                 output = socket.getOutputStream();
-                System.out.println("现在我将发送私聊消息" + message);
+                System.out.println("现在我将发送私聊消息:" + message);
                 //发送私聊消息头给服务器
                 output.write(PRIVATE);
                 //由于只发一个字符过去，这里稍微处理一下
-                String clientIdentity = identity.charAt(identity.length() - 1) + "";
-                output.write(clientIdentity.getBytes()); //发送私聊对象id给服务器
-                output.write(message.getBytes());//发送私聊内容
+                int clientIdentity = Integer.parseInt(identity.charAt(identity.length() - 1) + "");
+                output.write(clientIdentity); //发送私聊对象id给服务器
+                System.out.println("我发送给服务器的id是:" + clientIdentity);
+                output.write((message + "\r\n").getBytes());//发送私聊内容
                 String sendPrivateMsg = message + "\n";
-                pShowArea.append(sendPrivateMsg); //在己方私聊面板上显示内容
-                pTxtField.setText(null);
+                showArea.append(sendPrivateMsg); //在己方私聊面板上显示内容
+                text_field.setText(null);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

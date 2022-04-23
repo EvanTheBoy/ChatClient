@@ -9,13 +9,12 @@ import java.net.Socket;
 //这是专门为客户端写的接收其他客户端传来的消息的线程
 public class ClientThread implements Runnable, MsgType {
     private Socket s;
-    private JTextArea area1, area2;
+    private JTextArea area;
     private JList<String> userList;
     private OutputStream output;
-    private JFrame jFrame;
-    public ClientThread(Socket s, JTextArea area1, JList<String> userList) {
+    public ClientThread(Socket s, JTextArea area, JList<String> userList) {
         this.s = s;
-        this.area1 = area1;
+        this.area = area;
         this.userList = userList;
         try {
             this.output = s.getOutputStream();
@@ -58,11 +57,9 @@ public class ClientThread implements Runnable, MsgType {
         return new String(message);
     }
 
-    private void activatePrivateRoom() {
-        jFrame = new JFrame("私聊窗口");
-        jFrame.setSize(800, 500);
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setVisible(true);
+    private void handleMessage(InputStreamReader input) throws Exception {
+        String message = getMessage(input);
+        area.append(message.trim() + "\n");
     }
 
     public void run() {
@@ -74,16 +71,14 @@ public class ClientThread implements Runnable, MsgType {
                 System.out.println("准备进入switch...");
                 switch (head) {
                     case GROUP:
-                        String message = getMessage(input);
-                        area1.append(message.trim() + "\n");
+                        handleMessage(input);
                         break;
                     case USER:
                         readUser(input);
                         break;
                     case PRIVATE:
-                        String privateMessage = getMessage(input);
-                        activatePrivateRoom();
-                        area2.append(privateMessage.trim() + "\n");
+                        handleMessage(input);
+                        //area2.append(privateMessage.trim() + "\n");
                         break;
                     default:
                         break;
