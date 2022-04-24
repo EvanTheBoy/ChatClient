@@ -112,6 +112,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
             if (!userList.getValueIsAdjusting()) {
                 identity = userList.getSelectedValue();
                 chosen = true; //代表选中了某个用户，现在我们要开启私聊功能了
+                System.out.println("现在选中了用户,所以chosen的状态是:" + chosen);
 //                //选中用户后，立刻创建对应的私聊窗口
 //                activatePrivateUI(identity);
                 //从文本框获取输入内容
@@ -147,6 +148,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
                     System.out.println("clientIdentity = "+clientIdentity);
                     output.write(clientIdentity.getBytes());
                     chosen = false;
+                    System.out.println("私聊消息发送完毕,所以现在chosen的状态:" + chosen);
                 } else {
                     output.write(GROUP);
                 }
