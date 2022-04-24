@@ -20,6 +20,8 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
     private JPanel textPane, pFieldPane;
     private JButton sendButton, pSendButton;
     private JList<String> userList;
+    private boolean chosen = false;
+    private String identity = null;
 
     public void createClient(String ip, int port) {
         try {
@@ -108,24 +110,25 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
     public void valueChanged(ListSelectionEvent e) {
         try {
             if (!userList.getValueIsAdjusting()) {
-                String identity = userList.getSelectedValue();
+                identity = userList.getSelectedValue();
+                chosen = true; //代表选中了某个用户，现在我们要开启私聊功能了
 //                //选中用户后，立刻创建对应的私聊窗口
 //                activatePrivateUI(identity);
                 //从文本框获取输入内容
                 //String message = pTxtField.getText();
-                String message = text_field.getText();
-                output = socket.getOutputStream();
-                System.out.println("现在我将发送私聊消息:" + message);
-                //发送私聊消息头给服务器
-                output.write(PRIVATE);
-                //由于只发一个字符过去，这里稍微处理一下
-                int clientIdentity = Integer.parseInt(identity.charAt(identity.length() - 1) + "");
-                output.write(clientIdentity); //发送私聊对象id给服务器
-                System.out.println("我发送给服务器的id是:" + clientIdentity);
-                output.write((message + "\r\n").getBytes());//发送私聊内容
-                String sendPrivateMsg = message + "\n";
-                showArea.append(sendPrivateMsg); //在己方私聊面板上显示内容
-                text_field.setText(null);
+//                String message = text_field.getText();
+//                output = socket.getOutputStream();
+//                System.out.println("现在我将发送私聊消息:" + message);
+//                //发送私聊消息头给服务器
+//                output.write(PRIVATE);
+//                //由于只发一个字符过去，这里稍微处理一下
+//                int clientIdentity = Integer.parseInt(identity.charAt(identity.length() - 1) + "");
+//                output.write(clientIdentity); //发送私聊对象id给服务器
+//                System.out.println("我发送给服务器的id是:" + clientIdentity);
+//                output.write((message + "\r\n").getBytes());//发送私聊内容
+//                String sendPrivateMsg = message + "\n";
+//                showArea.append(sendPrivateMsg); //在己方私聊面板上显示内容
+//                text_field.setText(null);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -138,8 +141,16 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         if (message.length() > 0) {
             try {
                 output = socket.getOutputStream();
-                output.write(GROUP);
-                output.write(message.getBytes());
+                if (chosen) {
+                    output.write(PRIVATE);
+                    String clientIdentity = (identity.charAt(identity.length() - 1) + "\r\n");
+                    System.out.println("clientIdentity = "+clientIdentity);
+                    output.write(clientIdentity.getBytes());
+                    chosen = false;
+                } else {
+                    output.write(GROUP);
+                }
+                output.write((message + "\r\n").getBytes());
                 output.flush();
                 String sendMsg = "我:" + message + "\n";
                 System.out.println("我将把这个消息发送出去:" + sendMsg);
