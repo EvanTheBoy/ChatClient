@@ -77,6 +77,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         jf.setVisible(true);
     }
 
+    //选中用户列表中某个用户，则调用这个方法
     @Override
     public void valueChanged(ListSelectionEvent e) {
         try {
@@ -90,6 +91,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         }
     }
 
+    //按钮的点击事件
     @Override
     public void actionPerformed(ActionEvent e) {
         String message = text_field.getText();

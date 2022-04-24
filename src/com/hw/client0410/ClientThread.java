@@ -24,6 +24,7 @@ public class ClientThread implements Runnable, MsgType {
         }
     }
 
+    //读取并更新用户列表
     private void readUser(InputStreamReader input) throws Exception {
         int size = input.read();
         System.out.println("user size = " + size);
@@ -34,10 +35,10 @@ public class ClientThread implements Runnable, MsgType {
             System.out.println("用户上线消息收到，准备添加进列表..." + userMsg);
             userArr[i] = userMsg;
         }
-//        userArr[i] = "群聊";
         userList.setListData(userArr);
     }
 
+    //自己定义的读取消息的方法
     private String readString(InputStreamReader is) throws Exception {
         StringBuffer stringBuffer = new StringBuffer();
         int i = 0;
@@ -48,6 +49,7 @@ public class ClientThread implements Runnable, MsgType {
         return new String(stringBuffer);
     }
 
+    //自己定义的接收消息的方法
     private String getMessage(InputStreamReader input) throws Exception {
         StringBuffer message = new StringBuffer();
         int i = 0;
@@ -59,6 +61,7 @@ public class ClientThread implements Runnable, MsgType {
         return new String(message);
     }
 
+    //把收到的消息添加到面板上
     private void handleMessage(InputStreamReader input) throws Exception {
         String message = getMessage(input);
         area.append(message.trim() + "\n");
@@ -80,7 +83,6 @@ public class ClientThread implements Runnable, MsgType {
                         break;
                     case PRIVATE:
                         handleMessage(input);
-                        //area2.append(privateMessage.trim() + "\n");
                         break;
                     default:
                         break;
