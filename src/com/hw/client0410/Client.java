@@ -123,6 +123,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
                         System.out.println("clientIdentity = "+clientIdentity);
                         output.write(clientIdentity.getBytes());
                         System.out.println("私聊消息发送完毕,所以现在chosen的状态:" + chosen);
+                        //userList.isSelectedIndex();
                     } else {
                         output.write(GROUP);
                     }
