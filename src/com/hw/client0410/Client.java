@@ -18,7 +18,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
     private JTextField text_field, pTxtField;
     private JScrollPane userTxtScrollPane, userListPanel, privateUserPane;
     private JPanel textPane, pFieldPane;
-    private JButton sendButton, pSendButton;
+    private JButton sendButton, pButton;
     private JList<String> userList;
     private boolean chosen = false;
     private String identity = null;
@@ -55,10 +55,13 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         text_field.addActionListener(this);
         sendButton = new JButton("send");
         sendButton.addActionListener(this);
+        pButton = new JButton("回到群聊");
+        pButton.addActionListener(this);
         textPane = new JPanel();
         textPane.setLayout(new FlowLayout());
         textPane.add(text_field);
         textPane.add(sendButton);
+        textPane.add(pButton);
 
         //用户列表
         userListPanel = new JScrollPane();
@@ -76,35 +79,6 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         jf.add(userListPanel, BorderLayout.EAST);
         jf.setVisible(true);
     }
-
-//    //创建私聊窗口
-//    private void activatePrivateUI(String username) {
-//        JFrame privateUI = new JFrame("与" + username + "的聊天");
-//        privateUI.setSize(800, 500);
-//        privateUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        privateUI.setLocationRelativeTo(null);
-//
-//        //消息显示区域
-//        pShowArea = new JTextArea();
-//        pShowArea.setEditable(false);
-//        pShowArea.setLineWrap(true);
-//        privateUserPane = new JScrollPane(pShowArea);
-//
-//        //文本框和按钮
-//        pTxtField = new JTextField();
-//        pTxtField.setColumns(30);
-//        pTxtField.addActionListener(this);
-//        pSendButton = new JButton("send");
-//        pSendButton.addActionListener(this);
-//        pFieldPane = new JPanel(new FlowLayout());
-//        pFieldPane.add(pTxtField);
-//        pFieldPane.add(pSendButton);
-//
-//        //最后的界面添加
-//        privateUI.add(privateUserPane, BorderLayout.CENTER);
-//        privateUI.add(pFieldPane, BorderLayout.SOUTH);
-//        privateUI.setVisible(true);
-//    }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -138,29 +112,32 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String message = text_field.getText();
-        if (message.length() > 0) {
-            try {
-                output = socket.getOutputStream();
-                if (chosen) {
-                    output.write(PRIVATE);
-                    String clientIdentity = (identity.charAt(identity.length() - 1) + "\r\n");
-                    System.out.println("clientIdentity = "+clientIdentity);
-                    output.write(clientIdentity.getBytes());
-                    chosen = false;
-                    System.out.println("私聊消息发送完毕,所以现在chosen的状态:" + chosen);
-                } else {
-                    output.write(GROUP);
+        if (e.getActionCommand().equals("send")) {
+            String message = text_field.getText();
+            if (message.length() > 0) {
+                try {
+                    output = socket.getOutputStream();
+                    if (chosen) {
+                        output.write(PRIVATE);
+                        String clientIdentity = (identity.charAt(identity.length() - 1) + "\r\n");
+                        System.out.println("clientIdentity = "+clientIdentity);
+                        output.write(clientIdentity.getBytes());
+                        System.out.println("私聊消息发送完毕,所以现在chosen的状态:" + chosen);
+                    } else {
+                        output.write(GROUP);
+                    }
+                    output.write((message + "\r\n").getBytes());
+                    output.flush();
+                    String sendMsg = "我:" + message + "\n";
+                    System.out.println("我将把这个消息发送出去:" + sendMsg);
+                    showArea.append(sendMsg);
+                    text_field.setText(null);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-                output.write((message + "\r\n").getBytes());
-                output.flush();
-                String sendMsg = "我:" + message + "\n";
-                System.out.println("我将把这个消息发送出去:" + sendMsg);
-                showArea.append(sendMsg);
-                text_field.setText(null);
-            } catch (IOException ex) {
-                ex.printStackTrace();
             }
+        } else {
+            chosen = false;
         }
     }
 
