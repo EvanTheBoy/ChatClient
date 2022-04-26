@@ -13,6 +13,8 @@ public class Login {
         //用户名与文本框部分
         JPanel textPanel = new JPanel();
         JTextField userArea = new JTextField();
+        JTextField passwordArea = new JTextField();
+
 
         //按钮部分
         JPanel buttonPanel = new JPanel();
