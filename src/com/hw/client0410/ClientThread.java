@@ -29,7 +29,7 @@ public class ClientThread implements Runnable, MsgType {
         int size = input.read();
         System.out.println("user size = " + size);
         String[] userArr = new String[size + 1];
-        userArr[0] = "群聊";
+        userArr[0] = "广播";
         for (int i = 1; i <= size; ++i) {
             String userMsg = readString(input);
             System.out.println("用户上线消息收到，准备添加进列表..." + userMsg);

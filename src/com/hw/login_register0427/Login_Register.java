@@ -13,6 +13,13 @@ public class Login_Register implements ActionListener {
     private JButton confirm;
     private JPanel buttonPanel, titlePanel;
     private JFrame jf, frame;
+    private String[] userInfo = new String[2];
+    private boolean collected;
+
+    public Login_Register() {
+        collected = false;
+    }
+
     public void initEnterUI() {
         //登录页面
         jf = new JFrame("Login Page");
@@ -91,17 +98,22 @@ public class Login_Register implements ActionListener {
         System.out.println("选择页面");
     }
 
+    public boolean isCollected() {
+        return collected;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Enter")) {
             System.out.println("按下了按钮");
             String userName = userID.getText();
+            System.out.println("获取到的用户名是:"+userName);
+            //获取用户的用户名
+            userInfo[0] = userName;
             String passwd = Arrays.toString(password.getPassword());
             User user = new User();
             user.setPassword(passwd);
             user.setUsername(userName);
-            Login login = new Login();
-            login.setUser(user);
             jf.setVisible(false);
             initOptionUI();
         } else if (e.getActionCommand().equals("确认")) {
@@ -109,6 +121,9 @@ public class Login_Register implements ActionListener {
                 if (c instanceof JRadioButton) {
                     if (((JRadioButton) c).isSelected()) {
                         String info = ((JRadioButton) c).getText();
+                        userInfo[1] = info;
+                        collected = true;
+                        frame.setVisible(false);
                     }
                 }
             }

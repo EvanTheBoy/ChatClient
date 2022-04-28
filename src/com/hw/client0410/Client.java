@@ -28,10 +28,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
     public void createClient(String ip, int port) {
         try {
             socket = new Socket(ip, port);
-            //先出现注册界面
-            Login_Register lg = new Login_Register();
-            lg.initEnterUI();
-            //initUI();
+            initUI();
             //接受消息线程
             ClientThread rt = new ClientThread(socket, showArea, userList);
             Thread t2 = new Thread(rt);
@@ -88,7 +85,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         try {
             if (!userList.getValueIsAdjusting()) {
                 identity = userList.getSelectedValue();
-                chosen = !identity.equals("群聊"); //代表选中了某个用户，现在我们要开启私聊功能了
+                chosen = !identity.equals("群聊"); //代表选中了某个用户，现在我们要开启相应功能了
                 System.out.println("现在选中了用户,所以chosen的状态是:" + chosen);
             }
         } catch (Exception ex) {
