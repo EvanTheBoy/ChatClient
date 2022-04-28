@@ -12,8 +12,10 @@ public class Login_Register implements ActionListener {
     private JRadioButton btn1, btn2, btn3;
     private JButton confirm;
     private JPanel buttonPanel, titlePanel;
+    private JFrame jf, frame;
     public void initEnterUI() {
-        JFrame jf = new JFrame("Login Page");
+        //登录页面
+        jf = new JFrame("Login Page");
         jf.setSize(500, 500);
         jf.setLayout(null);
         jf.setLocationRelativeTo(null);
@@ -54,7 +56,8 @@ public class Login_Register implements ActionListener {
     }
 
     private void initOptionUI() {
-        JFrame frame = new JFrame("选择界面");
+        //选择页面
+        frame = new JFrame("选择界面");
         frame.setSize(280, 140);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -85,11 +88,13 @@ public class Login_Register implements ActionListener {
         frame.add(titlePanel, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
+        System.out.println("选择页面");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("登录")) {
+        if (e.getActionCommand().equals("Enter")) {
+            System.out.println("按下了按钮");
             String userName = userID.getText();
             String passwd = Arrays.toString(password.getPassword());
             User user = new User();
@@ -97,6 +102,7 @@ public class Login_Register implements ActionListener {
             user.setUsername(userName);
             Login login = new Login();
             login.setUser(user);
+            jf.setVisible(false);
             initOptionUI();
         } else if (e.getActionCommand().equals("确认")) {
             for (Component c : buttonPanel.getComponents()) {
