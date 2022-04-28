@@ -28,9 +28,10 @@ public class ClientThread implements Runnable, MsgType {
     private void readUser(InputStreamReader input) throws Exception {
         int size = input.read();
         System.out.println("user size = " + size);
-        String[] userArr = new String[size + 1];
+        String[] userArr = new String[size + 2];
         userArr[0] = "广播";
-        for (int i = 1; i <= size; ++i) {
+        userArr[1] = "群聊";
+        for (int i = 2; i <= size + 1; ++i) {
             String userMsg = readString(input);
             System.out.println("用户上线消息收到，准备添加进列表..." + userMsg);
             userArr[i] = userMsg;
@@ -75,7 +76,7 @@ public class ClientThread implements Runnable, MsgType {
                 System.out.println("ClientThread:得到消息协议头, head = " + head);
                 System.out.println("准备进入switch...");
                 switch (head) {
-                    case GROUP:
+                    case BROADCAST:
                         handleMessage(input);
                         break;
                     case USER:
@@ -84,6 +85,8 @@ public class ClientThread implements Runnable, MsgType {
                     case PRIVATE:
                         handleMessage(input);
                         break;
+                    case GROUP:
+                        handleMessage(input);
                     default:
                         break;
                 }

@@ -22,7 +22,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
     private JPanel textPane;
     private JButton sendButton;
     private JList<String> userList;
-    private boolean chosen = false;
+    private int chosen = 1; //1代表广播，2代表群聊，3代表私聊
     private String identity = null;
 
     public void createClient(String ip, int port) {
@@ -41,7 +41,7 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
     //创建群聊窗口
     private void initUI() {
         jf = new JFrame("聊天室");
-        jf.setSize(900, 600);
+        jf.setSize(700, 500);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setLocationRelativeTo(null);
 
@@ -85,8 +85,14 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         try {
             if (!userList.getValueIsAdjusting()) {
                 identity = userList.getSelectedValue();
-                chosen = !identity.equals("群聊"); //代表选中了某个用户，现在我们要开启相应功能了
-                System.out.println("现在选中了用户,所以chosen的状态是:" + chosen);
+                //chosen = !identity.equals("群聊"); //代表选中了某个用户，现在我们要开启相应功能了
+                if (identity.equals("广播")) {
+                    chosen = 1;
+                } else if (identity.equals("群聊")) {
+                    chosen = 2;
+                } else {
+                    chosen = 3;
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -100,19 +106,21 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
         if (message.length() > 0) {
             try {
                 output = socket.getOutputStream();
-                if (chosen) {
+                if (chosen == 3) {
+                    //此时代表私聊
                     output.write(PRIVATE);
                     String clientIdentity = (identity.charAt(identity.length() - 1) + "\r\n");
-                    System.out.println("clientIdentity = "+clientIdentity);
                     output.write(clientIdentity.getBytes());
-                    System.out.println("私聊消息发送完毕,所以现在chosen的状态:" + chosen);
-                } else {
+                } else if (chosen == 1) {
+                    //1代表广播
+                    output.write(BROADCAST);
+                } else if (chosen == 2) {
+                    //此时chosen已定位2，代表群聊
                     output.write(GROUP);
                 }
                 output.write((message + "\r\n").getBytes());
                 output.flush();
                 String sendMsg = "我:" + message + "\n";
-                System.out.println("我将把这个消息发送出去:" + sendMsg);
                 showArea.append(sendMsg);
                 text_field.setText(null);
             } catch (IOException ex) {
