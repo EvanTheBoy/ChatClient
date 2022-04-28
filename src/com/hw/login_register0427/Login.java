@@ -6,7 +6,6 @@ public class Login {
         this.user = user;
     }
 
-    
 
     public static void main(String[] args) {
 

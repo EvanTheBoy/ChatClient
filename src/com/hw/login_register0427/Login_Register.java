@@ -10,6 +10,8 @@ public class Login_Register implements ActionListener {
     private JTextField userID;
     private JPasswordField password;
     private JRadioButton btn1, btn2, btn3;
+    private JButton confirm;
+    private JPanel buttonPanel, titlePanel;
     public void initEnterUI() {
         JFrame jf = new JFrame("Login Page");
         jf.setSize(500, 500);
@@ -53,14 +55,14 @@ public class Login_Register implements ActionListener {
 
     private void initOptionUI() {
         JFrame frame = new JFrame("选择界面");
-        frame.setSize(250, 120);
+        frame.setSize(280, 140);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
         //设置问题
         JLabel title = new JLabel();
         title.setText("请选择你要加入的群聊");
-        JPanel titlePanel = new JPanel();
+        titlePanel = new JPanel();
         titlePanel.add(title);
 
         //设置按钮
@@ -72,10 +74,12 @@ public class Login_Register implements ActionListener {
         group.add(btn1);
         group.add(btn2);
         group.add(btn3);
-        JPanel buttonPanel = new JPanel();
+        buttonPanel = new JPanel();
         buttonPanel.add(btn1);
         buttonPanel.add(btn2);
         buttonPanel.add(btn3);
+        confirm = new JButton("确认");
+        buttonPanel.add(confirm);
 
         //最后的界面完成
         frame.add(titlePanel, BorderLayout.CENTER);
@@ -85,13 +89,23 @@ public class Login_Register implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String userName = userID.getText();
-        String passwd = Arrays.toString(password.getPassword());
-        User user = new User();
-        user.setPassword(passwd);
-        user.setUsername(userName);
-        Login login = new Login();
-        login.setUser(user);
-        initOptionUI();
+        if (e.getActionCommand().equals("登录")) {
+            String userName = userID.getText();
+            String passwd = Arrays.toString(password.getPassword());
+            User user = new User();
+            user.setPassword(passwd);
+            user.setUsername(userName);
+            Login login = new Login();
+            login.setUser(user);
+            initOptionUI();
+        } else if (e.getActionCommand().equals("确认")) {
+            for (Component c : buttonPanel.getComponents()) {
+                if (c instanceof JRadioButton) {
+                    if (((JRadioButton) c).isSelected()) {
+                        String info = ((JRadioButton) c).getText();
+                    }
+                }
+            }
+        }
     }
 }

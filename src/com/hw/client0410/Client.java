@@ -1,5 +1,7 @@
 package com.hw.client0410;
 
+import com.hw.login_register0427.Login_Register;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -26,7 +28,10 @@ public class Client implements ActionListener, ListSelectionListener, MsgType {
     public void createClient(String ip, int port) {
         try {
             socket = new Socket(ip, port);
-            initUI();
+            //先出现注册界面
+            Login_Register lg = new Login_Register();
+            lg.initEnterUI();
+            //initUI();
             //接受消息线程
             ClientThread rt = new ClientThread(socket, showArea, userList);
             Thread t2 = new Thread(rt);
