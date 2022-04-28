@@ -57,7 +57,6 @@ public class ClientThread implements Runnable, MsgType {
         while ((i = input.read()) != 13) {
             char c = (char) i;
             message.append(c);
-            System.out.println("现在的消息是:" + message);
         }
         return new String(message);
     }
@@ -74,7 +73,6 @@ public class ClientThread implements Runnable, MsgType {
                 InputStreamReader input = new InputStreamReader(s.getInputStream());
                 int head = input.read();
                 System.out.println("ClientThread:得到消息协议头, head = " + head);
-                System.out.println("准备进入switch...");
                 switch (head) {
                     case BROADCAST:
                         handleMessage(input);
